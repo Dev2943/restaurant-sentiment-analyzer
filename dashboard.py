@@ -10,6 +10,7 @@ Features:
 - Topic modeling and insights
 - Export to PDF/Excel
 - Interactive visualizations
+- Demo data with 750+ reviews
 """
 
 import streamlit as st
@@ -24,6 +25,7 @@ import seaborn as sns
 from datetime import datetime
 import io
 import base64
+import random
 
 # NLP and ML Libraries
 from textblob import TextBlob
@@ -91,6 +93,135 @@ if 'analyzed_data' not in st.session_state:
     st.session_state.analyzed_data = None
 if 'restaurants' not in st.session_state:
     st.session_state.restaurants = []
+
+def generate_demo_data():
+    """Generate realistic demo data with 750 reviews"""
+    
+    # Restaurant names
+    restaurants = [
+        "Italian Bistro", "Sushi Palace", "Burger Haven", "Thai Garden", "Mexican Cantina",
+        "French Quarter", "Indian Spice", "Pizza Paradise", "Steakhouse Prime", "Ocean Grill",
+        "Vegan Delight", "BBQ Shack", "Chinese Dynasty", "Greek Taverna", "Tapas Bar",
+        "Ramen House", "Seafood Market", "Farm Table", "Wine & Dine", "Breakfast Club"
+    ]
+    
+    # Positive review templates
+    positive_reviews = [
+        "Absolutely amazing! The {dish} was perfectly cooked and the service was outstanding. Will definitely be back!",
+        "Best {cuisine} food I've ever had! Fresh ingredients, great atmosphere, and friendly staff.",
+        "Incredible experience! The {dish} exceeded all expectations. Highly recommend this place!",
+        "Outstanding service and delicious food. The {dish} was to die for. Five stars!",
+        "Loved everything about this restaurant! The {dish} was phenomenal and the ambiance was perfect.",
+        "Fantastic meal! The {dish} was cooked to perfection. Great value for the quality.",
+        "Excellent dining experience! The {dish} was incredible and the staff was so attentive.",
+        "One of the best restaurants in town! The {dish} was absolutely delicious.",
+        "Amazing food and wonderful service! The {dish} was the highlight of our evening.",
+        "Perfect dinner! The {dish} was exquisite and the wine selection was impressive.",
+        "Highly recommend! The {dish} was fresh and flavorful. Great for special occasions.",
+        "Superb quality! The {dish} was prepared beautifully and tasted amazing.",
+        "Five star experience! The {dish} was incredible and the service impeccable.",
+        "Wonderful restaurant! The {dish} was outstanding and the portions were generous.",
+        "Best meal we've had in ages! The {dish} was perfectly seasoned and cooked.",
+        "Exceptional food and service! The {dish} was a masterpiece. Will return soon!",
+        "Absolutely delicious! The {dish} was fresh and the presentation was beautiful.",
+        "Great atmosphere and amazing food! The {dish} did not disappoint.",
+        "Loved this place! The {dish} was cooked to perfection and staff was friendly.",
+        "Top-notch dining! The {dish} was exceptional and the dessert was divine."
+    ]
+    
+    # Negative review templates
+    negative_reviews = [
+        "Terrible experience. The {dish} was cold and service was extremely slow. Very disappointed.",
+        "Not impressed at all. The {dish} was bland and overpriced. Won't be returning.",
+        "Poor quality food. The {dish} was undercooked and the place was dirty. Avoid!",
+        "Disappointing meal. The {dish} was tough and flavorless. Not worth the money.",
+        "Horrible service! Waited forever for our {dish} and it wasn't even good when it arrived.",
+        "Very bad experience. The {dish} was stale and the staff was rude. Never again.",
+        "Awful restaurant. The {dish} gave me food poisoning. Health department should investigate.",
+        "Completely unacceptable. The {dish} was burnt and the vegetables were rotten.",
+        "Worst dining experience ever! The {dish} was inedible and service was terrible.",
+        "Do not recommend. The {dish} was dry and tasteless. Very overrated place.",
+        "Horrible food quality. The {dish} was greasy and cold. Waste of money.",
+        "Terrible! The {dish} was undercooked and the place smelled bad. Very unsanitary.",
+        "Disappointing all around. The {dish} was nothing special and way too expensive.",
+        "Poor service and mediocre food. The {dish} was lukewarm and portions were tiny.",
+        "Not good at all. The {dish} was bland and the wait staff was unfriendly.",
+        "Very disappointed. The {dish} didn't taste fresh and the ambiance was depressing.",
+        "Awful experience! The {dish} was overcooked and rubbery. Never coming back.",
+        "Terrible value. The {dish} was small and not flavorful. Too expensive for what you get.",
+        "Bad food and worse service. The {dish} was cold when served. Unacceptable!",
+        "Don't waste your time. The {dish} was poorly prepared and the place was dirty."
+    ]
+    
+    # Neutral review templates
+    neutral_reviews = [
+        "The {dish} was okay, nothing special. Service was average. Might try again.",
+        "Decent food but nothing to write home about. The {dish} was good but not great.",
+        "Average experience overall. The {dish} was fine but expected more for the price.",
+        "The {dish} was good but the service could be better. Mixed feelings about this place.",
+        "Nice ambiance but the {dish} was just okay. Probably won't rush back.",
+        "Acceptable meal. The {dish} was decent but there are better options nearby.",
+        "The {dish} was satisfactory. Nothing exceptional but not bad either.",
+        "Average restaurant. The {dish} was alright but portions could be bigger.",
+        "Fair experience. The {dish} was good but service was slow. Could improve.",
+        "The {dish} was decent enough. Not bad but not amazing either. Just average.",
+        "Okay place for a quick meal. The {dish} was fine but wouldn't go out of my way.",
+        "Mediocre at best. The {dish} was edible but lacked flavor. Could be better.",
+        "Nothing special about this place. The {dish} was standard fare. Very average.",
+        "The {dish} was acceptable but overpriced. Service was okay, nothing memorable.",
+        "Middle of the road restaurant. The {dish} was fine but atmosphere was lacking."
+    ]
+    
+    # Dishes by cuisine type
+    dishes = {
+        "Italian": ["pasta", "pizza", "risotto", "lasagna", "tiramisu", "carbonara", "bruschetta"],
+        "Sushi": ["sushi rolls", "sashimi", "tempura", "ramen", "teriyaki", "miso soup"],
+        "American": ["burger", "steak", "fries", "wings", "mac and cheese", "BBQ ribs"],
+        "Thai": ["pad thai", "curry", "spring rolls", "tom yum", "satay"],
+        "Mexican": ["tacos", "burritos", "enchiladas", "quesadilla", "guacamole", "fajitas"],
+        "French": ["escargot", "coq au vin", "ratatouille", "croissant", "crème brûlée"],
+        "Indian": ["curry", "naan", "biryani", "tandoori", "samosas", "tikka masala"],
+        "Chinese": ["fried rice", "dumplings", "kung pao", "sweet and sour", "spring rolls"],
+        "Seafood": ["salmon", "lobster", "shrimp", "fish and chips", "clam chowder", "oysters"],
+        "Greek": ["gyro", "souvlaki", "moussaka", "spanakopita", "baklava"]
+    }
+    
+    # Generate reviews
+    reviews = []
+    restaurant_cuisines = {
+        "Italian Bistro": "Italian", "Sushi Palace": "Sushi", "Burger Haven": "American",
+        "Thai Garden": "Thai", "Mexican Cantina": "Mexican", "French Quarter": "French",
+        "Indian Spice": "Indian", "Pizza Paradise": "Italian", "Steakhouse Prime": "American",
+        "Ocean Grill": "Seafood", "Vegan Delight": "American", "BBQ Shack": "American",
+        "Chinese Dynasty": "Chinese", "Greek Taverna": "Greek", "Tapas Bar": "Spanish",
+        "Ramen House": "Sushi", "Seafood Market": "Seafood", "Farm Table": "American",
+        "Wine & Dine": "French", "Breakfast Club": "American"
+    }
+    
+    random.seed(42)  # For reproducibility
+    
+    for i in range(750):
+        restaurant = random.choice(restaurants)
+        cuisine = restaurant_cuisines.get(restaurant, "American")
+        dish_list = dishes.get(cuisine, dishes["American"])
+        dish = random.choice(dish_list)
+        
+        # 60% positive, 25% negative, 15% neutral (realistic distribution)
+        rand = random.random()
+        if rand < 0.60:
+            template = random.choice(positive_reviews)
+        elif rand < 0.85:
+            template = random.choice(negative_reviews)
+        else:
+            template = random.choice(neutral_reviews)
+        
+        review = template.format(dish=dish, cuisine=cuisine)
+        reviews.append({
+            'Review': review,
+            'Restaurant': restaurant
+        })
+    
+    return pd.DataFrame(reviews)
 
 class SentimentAnalyzer:
     """Enhanced sentiment analysis with multiple models"""
@@ -327,7 +458,7 @@ def create_restaurant_comparison(df):
         yaxis_title="Number of Reviews",
         barmode='group',
         template="plotly_white",
-        height=400
+        height=500
     )
     
     return fig
@@ -386,11 +517,43 @@ def main():
     with st.sidebar:
         st.header("📊 Dashboard Controls")
         
-        st.markdown("### Upload Data")
+        st.markdown("### 🚀 Quick Start")
+        
+        # Demo button with 750 reviews
+        if st.button("🎬 Try Demo (750 Reviews)", type="primary", use_container_width=True):
+            with st.spinner("Generating demo data..."):
+                demo_df = generate_demo_data()
+                st.session_state.demo_data = demo_df
+                st.success(f"✅ Demo data loaded! {len(demo_df)} reviews across 20 restaurants. Scroll down and click 'Analyze Reviews'.")
+        
+        st.markdown("---")
+        st.markdown("### 📤 Upload Your Data")
         uploaded_file = st.file_uploader(
             "Upload restaurant reviews (CSV)",
             type=['csv'],
             help="CSV file should have a 'Review' column and optionally a 'Restaurant' column"
+        )
+        
+        # Download sample template
+        st.markdown("---")
+        st.markdown("### 📥 Need a Template?")
+        
+        sample_template = pd.DataFrame({
+            'Review': [
+                'Amazing food and great service!',
+                'Terrible experience, would not recommend.',
+                'Average meal, nothing special.'
+            ],
+            'Restaurant': ['Restaurant A', 'Restaurant B', 'Restaurant C']
+        })
+        
+        csv_template = sample_template.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📄 Download Sample CSV",
+            data=csv_template,
+            file_name="sample_reviews_template.csv",
+            mime="text/csv",
+            use_container_width=True
         )
         
         st.markdown("---")
@@ -402,225 +565,255 @@ def main():
         st.markdown("---")
         st.markdown("### 📖 Quick Guide")
         st.info("""
-        **1.** Upload your CSV file
+        **1.** Try demo or upload CSV
         **2.** Click 'Analyze Reviews'
         **3.** Explore insights in tabs
         **4.** Export results
         """)
     
     # Main content
-    if uploaded_file is not None:
+    # Check for demo data or uploaded file
+    if 'demo_data' in st.session_state:
+        df = st.session_state.demo_data
+        st.info(f"📊 Using demo data ({len(df)} reviews). Upload your own CSV to analyze your reviews!")
+    elif uploaded_file is not None:
         df = load_data(uploaded_file)
+    else:
+        df = None
+    
+    if df is not None:
+        st.success(f"✅ Loaded {len(df)} reviews!")
         
-        if df is not None:
-            st.success(f"✅ Loaded {len(df)} reviews!")
+        # Show preview
+        with st.expander("📋 Preview Data"):
+            st.dataframe(df.head(10))
+        
+        # Detect columns
+        text_column = st.selectbox("Select Review Text Column", df.columns, index=0)
+        
+        restaurant_column = None
+        if len(df.columns) > 1:
+            has_restaurant = st.checkbox("Data has multiple restaurants?", value=True if 'Restaurant' in df.columns else False)
+            if has_restaurant:
+                default_idx = list(df.columns).index('Restaurant') + 1 if 'Restaurant' in df.columns else 0
+                restaurant_column = st.selectbox("Select Restaurant Column", [None] + list(df.columns), index=default_idx)
+        
+        # Analyze button
+        if st.button("🚀 Analyze Reviews", type="primary"):
+            with st.spinner("Analyzing reviews... This may take a moment."):
+                results_df = analyze_reviews(df, text_column, restaurant_column)
+                st.session_state.analyzed_data = results_df
+                st.success("✅ Analysis complete!")
+        
+        # Display results
+        if st.session_state.analyzed_data is not None:
+            results_df = st.session_state.analyzed_data
             
-            # Show preview
-            with st.expander("📋 Preview Data"):
-                st.dataframe(df.head(10))
+            # Key Metrics
+            st.markdown("## 📈 Key Metrics")
+            col1, col2, col3, col4 = st.columns(4)
             
-            # Detect columns
-            text_column = st.selectbox("Select Review Text Column", df.columns, index=0)
+            with col1:
+                st.metric("Total Reviews", len(results_df))
             
-            restaurant_column = None
-            if len(df.columns) > 1:
-                has_restaurant = st.checkbox("Data has multiple restaurants?")
-                if has_restaurant:
-                    restaurant_column = st.selectbox("Select Restaurant Column", [None] + list(df.columns), index=0)
+            with col2:
+                positive_pct = (len(results_df[results_df['Sentiment'] == 'Positive']) / len(results_df) * 100)
+                st.metric("Positive", f"{positive_pct:.1f}%", delta=f"{len(results_df[results_df['Sentiment'] == 'Positive'])} reviews")
             
-            # Analyze button
-            if st.button("🚀 Analyze Reviews", type="primary"):
-                with st.spinner("Analyzing reviews... This may take a moment."):
-                    results_df = analyze_reviews(df, text_column, restaurant_column)
-                    st.session_state.analyzed_data = results_df
-                    st.success("✅ Analysis complete!")
+            with col3:
+                negative_pct = (len(results_df[results_df['Sentiment'] == 'Negative']) / len(results_df) * 100)
+                st.metric("Negative", f"{negative_pct:.1f}%", delta=f"-{len(results_df[results_df['Sentiment'] == 'Negative'])} reviews", delta_color="inverse")
             
-            # Display results
-            if st.session_state.analyzed_data is not None:
-                results_df = st.session_state.analyzed_data
+            with col4:
+                avg_confidence = results_df['Confidence_Score'].mean()
+                st.metric("Avg Confidence", f"{avg_confidence:.2f}")
+            
+            st.markdown("---")
+            
+            # Tabs for different views
+            tab1, tab2, tab3, tab4, tab5 = st.tabs([
+                "📊 Overview",
+                "🔍 Detailed Analysis",
+                "🏪 Restaurant Comparison",
+                "💬 Topics & Insights",
+                "📥 Export"
+            ])
+            
+            with tab1:
+                st.markdown("### Sentiment Analysis Overview")
                 
-                # Key Metrics
-                st.markdown("## 📈 Key Metrics")
-                col1, col2, col3, col4 = st.columns(4)
+                col1, col2 = st.columns(2)
                 
                 with col1:
-                    st.metric("Total Reviews", len(results_df))
+                    st.plotly_chart(create_sentiment_distribution(results_df), use_container_width=True)
                 
                 with col2:
-                    positive_pct = (len(results_df[results_df['Sentiment'] == 'Positive']) / len(results_df) * 100)
-                    st.metric("Positive", f"{positive_pct:.1f}%", delta=f"{len(results_df[results_df['Sentiment'] == 'Positive'])} reviews")
+                    st.plotly_chart(create_sentiment_pie(results_df), use_container_width=True)
+                
+                st.plotly_chart(create_confidence_distribution(results_df), use_container_width=True)
+            
+            with tab2:
+                st.markdown("### Detailed Review Analysis")
+                
+                sentiment_filter = st.multiselect(
+                    "Filter by Sentiment",
+                    options=['Positive', 'Negative', 'Neutral'],
+                    default=['Positive', 'Negative', 'Neutral']
+                )
+                
+                filtered_df = results_df[results_df['Sentiment'].isin(sentiment_filter)]
+                
+                st.dataframe(
+                    filtered_df[['Review', 'Sentiment', 'Confidence_Score', 'TextBlob_Sentiment', 'VADER_Sentiment']],
+                    use_container_width=True
+                )
+                
+                # Sample reviews
+                st.markdown("#### 📝 Sample Reviews")
+                
+                col1, col2, col3 = st.columns(3)
+                
+                with col1:
+                    st.markdown("**🟢 Most Positive**")
+                    top_positive = results_df[results_df['Sentiment'] == 'Positive'].nlargest(3, 'Confidence_Score')
+                    for _, row in top_positive.iterrows():
+                        st.success(f"⭐ {row['Review'][:150]}...")
+                
+                with col2:
+                    st.markdown("**🔴 Most Negative**")
+                    top_negative = results_df[results_df['Sentiment'] == 'Negative'].nsmallest(3, 'Ensemble_Score')
+                    for _, row in top_negative.iterrows():
+                        st.error(f"❌ {row['Review'][:150]}...")
                 
                 with col3:
-                    negative_pct = (len(results_df[results_df['Sentiment'] == 'Negative']) / len(results_df) * 100)
-                    st.metric("Negative", f"{negative_pct:.1f}%", delta=f"-{len(results_df[results_df['Sentiment'] == 'Negative'])} reviews", delta_color="inverse")
-                
-                with col4:
-                    avg_confidence = results_df['Confidence_Score'].mean()
-                    st.metric("Avg Confidence", f"{avg_confidence:.2f}")
-                
-                st.markdown("---")
-                
-                # Tabs for different views
-                tab1, tab2, tab3, tab4, tab5 = st.tabs([
-                    "📊 Overview",
-                    "🔍 Detailed Analysis",
-                    "🏪 Restaurant Comparison",
-                    "💬 Topics & Insights",
-                    "📥 Export"
-                ])
-                
-                with tab1:
-                    st.markdown("### Sentiment Analysis Overview")
+                    st.markdown("**🟡 Neutral Reviews**")
+                    neutral = results_df[results_df['Sentiment'] == 'Neutral'].head(3)
+                    for _, row in neutral.iterrows():
+                        st.info(f"➖ {row['Review'][:150]}...")
+            
+            with tab3:
+                if restaurant_column and 'Restaurant' in results_df.columns:
+                    st.markdown("### Restaurant Performance Comparison")
                     
-                    col1, col2 = st.columns(2)
+                    fig = create_restaurant_comparison(results_df)
+                    if fig:
+                        st.plotly_chart(fig, use_container_width=True)
                     
-                    with col1:
-                        st.plotly_chart(create_sentiment_distribution(results_df), use_container_width=True)
+                    # Restaurant rankings
+                    st.markdown("#### 🏆 Restaurant Rankings")
                     
-                    with col2:
-                        st.plotly_chart(create_sentiment_pie(results_df), use_container_width=True)
+                    restaurant_stats = results_df.groupby('Restaurant').agg({
+                        'Sentiment': lambda x: (x == 'Positive').sum() / len(x) * 100,
+                        'Confidence_Score': 'mean',
+                        'Review': 'count'
+                    }).round(2)
                     
-                    st.plotly_chart(create_confidence_distribution(results_df), use_container_width=True)
+                    restaurant_stats.columns = ['Positive %', 'Avg Confidence', 'Total Reviews']
+                    restaurant_stats = restaurant_stats.sort_values('Positive %', ascending=False)
+                    
+                    st.dataframe(restaurant_stats, use_container_width=True)
+                else:
+                    st.info("Upload data with multiple restaurants to see comparison")
+            
+            with tab4:
+                st.markdown("### Topics & Insights")
                 
-                with tab2:
-                    st.markdown("### Detailed Review Analysis")
-                    
-                    sentiment_filter = st.multiselect(
-                        "Filter by Sentiment",
-                        options=['Positive', 'Negative', 'Neutral'],
-                        default=['Positive', 'Negative', 'Neutral']
+                if show_topics and len(results_df) >= 10:
+                    with st.spinner("Extracting topics..."):
+                        topic_modeler = TopicModeler(n_topics=5)
+                        topics_df = topic_modeler.extract_topics(results_df['Review'])
+                        
+                        if not topics_df.empty:
+                            st.markdown("#### 🎯 Main Topics Discussed")
+                            st.dataframe(topics_df, use_container_width=True)
+                
+                # Word clouds
+                st.markdown("#### ☁️ Word Clouds")
+                
+                cloud_option = st.radio(
+                    "Select Word Cloud",
+                    ["All Reviews", "Positive Only", "Negative Only"]
+                )
+                
+                if cloud_option == "All Reviews":
+                    fig = generate_wordcloud(results_df)
+                elif cloud_option == "Positive Only":
+                    fig = generate_wordcloud(results_df, sentiment='Positive')
+                else:
+                    fig = generate_wordcloud(results_df, sentiment='Negative')
+                
+                st.pyplot(fig)
+                
+                # Business insights
+                st.markdown("#### 💡 Automated Business Insights")
+                
+                positive_pct = len(results_df[results_df['Sentiment'] == 'Positive']) / len(results_df) * 100
+                
+                insights = []
+                
+                if positive_pct > 70:
+                    insights.append("✅ **Strong positive sentiment** - Customers are very satisfied!")
+                elif positive_pct < 40:
+                    insights.append("⚠️ **Concerning negative sentiment** - Immediate attention needed!")
+                else:
+                    insights.append("📊 **Mixed sentiment** - Room for improvement.")
+                
+                avg_confidence = results_df['Confidence_Score'].mean()
+                if avg_confidence > 0.7:
+                    insights.append("🎯 **High confidence scores** - Sentiment predictions are reliable.")
+                
+                for insight in insights:
+                    st.markdown(f'<div class="insight-box">{insight}</div>', unsafe_allow_html=True)
+            
+            with tab5:
+                st.markdown("### Export Results")
+                
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    csv = results_df.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        label="📄 Download CSV",
+                        data=csv,
+                        file_name=f"sentiment_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                        mime="text/csv"
                     )
-                    
-                    filtered_df = results_df[results_df['Sentiment'].isin(sentiment_filter)]
-                    
-                    st.dataframe(
-                        filtered_df[['Review', 'Sentiment', 'Confidence_Score', 'TextBlob_Sentiment', 'VADER_Sentiment']],
-                        use_container_width=True
+                
+                with col2:
+                    excel_data = export_to_excel(results_df)
+                    st.download_button(
+                        label="📊 Download Excel",
+                        data=excel_data,
+                        file_name=f"sentiment_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                     )
-                    
-                    # Sample reviews
-                    st.markdown("#### 📝 Sample Reviews")
-                    
-                    col1, col2, col3 = st.columns(3)
-                    
-                    with col1:
-                        st.markdown("**🟢 Most Positive**")
-                        top_positive = results_df[results_df['Sentiment'] == 'Positive'].nlargest(3, 'Confidence_Score')
-                        for _, row in top_positive.iterrows():
-                            st.success(f"⭐ {row['Review'][:150]}...")
-                    
-                    with col2:
-                        st.markdown("**🔴 Most Negative**")
-                        top_negative = results_df[results_df['Sentiment'] == 'Negative'].nsmallest(3, 'Ensemble_Score')
-                        for _, row in top_negative.iterrows():
-                            st.error(f"❌ {row['Review'][:150]}...")
-                    
-                    with col3:
-                        st.markdown("**🟡 Neutral Reviews**")
-                        neutral = results_df[results_df['Sentiment'] == 'Neutral'].head(3)
-                        for _, row in neutral.iterrows():
-                            st.info(f"➖ {row['Review'][:150]}...")
-                
-                with tab3:
-                    if restaurant_column and 'Restaurant' in results_df.columns:
-                        st.markdown("### Restaurant Performance Comparison")
-                        
-                        fig = create_restaurant_comparison(results_df)
-                        if fig:
-                            st.plotly_chart(fig, use_container_width=True)
-                        
-                        # Restaurant rankings
-                        st.markdown("#### 🏆 Restaurant Rankings")
-                        
-                        restaurant_stats = results_df.groupby('Restaurant').agg({
-                            'Sentiment': lambda x: (x == 'Positive').sum() / len(x) * 100,
-                            'Confidence_Score': 'mean',
-                            'Review': 'count'
-                        }).round(2)
-                        
-                        restaurant_stats.columns = ['Positive %', 'Avg Confidence', 'Total Reviews']
-                        restaurant_stats = restaurant_stats.sort_values('Positive %', ascending=False)
-                        
-                        st.dataframe(restaurant_stats, use_container_width=True)
-                    else:
-                        st.info("Upload data with multiple restaurants to see comparison")
-                
-                with tab4:
-                    st.markdown("### Topics & Insights")
-                    
-                    if show_topics:
-                        with st.spinner("Extracting topics..."):
-                            topic_modeler = TopicModeler(n_topics=5)
-                            topics_df = topic_modeler.extract_topics(results_df['Review'])
-                            
-                            if not topics_df.empty:
-                                st.markdown("#### 🎯 Main Topics Discussed")
-                                st.dataframe(topics_df, use_container_width=True)
-                    
-                    # Word clouds
-                    st.markdown("#### ☁️ Word Clouds")
-                    
-                    cloud_option = st.radio(
-                        "Select Word Cloud",
-                        ["All Reviews", "Positive Only", "Negative Only"]
-                    )
-                    
-                    if cloud_option == "All Reviews":
-                        fig = generate_wordcloud(results_df)
-                    elif cloud_option == "Positive Only":
-                        fig = generate_wordcloud(results_df, sentiment='Positive')
-                    else:
-                        fig = generate_wordcloud(results_df, sentiment='Negative')
-                    
-                    st.pyplot(fig)
-                    
-                    # Business insights
-                    st.markdown("#### 💡 Automated Business Insights")
-                    
-                    positive_pct = len(results_df[results_df['Sentiment'] == 'Positive']) / len(results_df) * 100
-                    
-                    insights = []
-                    
-                    if positive_pct > 70:
-                        insights.append("✅ **Strong positive sentiment** - Customers are very satisfied!")
-                    elif positive_pct < 40:
-                        insights.append("⚠️ **Concerning negative sentiment** - Immediate attention needed!")
-                    else:
-                        insights.append("📊 **Mixed sentiment** - Room for improvement.")
-                    
-                    avg_confidence = results_df['Confidence_Score'].mean()
-                    if avg_confidence > 0.7:
-                        insights.append("🎯 **High confidence scores** - Sentiment predictions are reliable.")
-                    
-                    for insight in insights:
-                        st.markdown(f'<div class="insight-box">{insight}</div>', unsafe_allow_html=True)
-                
-                with tab5:
-                    st.markdown("### Export Results")
-                    
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        csv = results_df.to_csv(index=False).encode('utf-8')
-                        st.download_button(
-                            label="📄 Download CSV",
-                            data=csv,
-                            file_name=f"sentiment_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                            mime="text/csv"
-                        )
-                    
-                    with col2:
-                        excel_data = export_to_excel(results_df)
-                        st.download_button(
-                            label="📊 Download Excel",
-                            data=excel_data,
-                            file_name=f"sentiment_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
-                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        )
     
     else:
-        # Welcome screen
+        # Welcome screen with better instructions
         st.markdown("## 👋 Welcome to Restaurant Sentiment Analyzer Pro!")
+        
+        # Quick action buttons
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown("""
+            ### 🎬 Try Demo
+            Click **"Try Demo (750 Reviews)"** in the sidebar to see the analyzer in action with sample reviews from 20 restaurants!
+            """)
+        
+        with col2:
+            st.markdown("""
+            ### 📤 Upload Data
+            Have your own reviews? Upload a CSV file to analyze your restaurant's customer feedback!
+            """)
+        
+        with col3:
+            st.markdown("""
+            ### 📥 Get Template
+            Don't have a CSV? Download our sample template and add your reviews!
+            """)
+        
+        st.markdown("---")
         
         st.markdown("""
         ### 🚀 Features
@@ -632,18 +825,19 @@ def main():
         - **Interactive Visualizations**: Beautiful charts and word clouds
         - **Export Options**: Download results as CSV or Excel
         
-        ### 📊 Get Started
+        ### 📊 Demo Dataset
         
-        1. Upload your restaurant reviews CSV file in the sidebar
-        2. Select the appropriate columns
-        3. Click "Analyze Reviews"
-        4. Explore the insights!
+        Our demo includes:
+        - **750 realistic restaurant reviews**
+        - **20 different restaurants**
+        - **Multiple cuisine types** (Italian, Sushi, Thai, Mexican, and more)
+        - **Varied sentiment distribution** (realistic mix of positive, negative, and neutral)
         
         ### 📋 CSV Format
         
-        Your CSV should have at least:
-        - A column with review text (e.g., "Review", "Text", "Comment")
-        - Optionally: A column with restaurant names for comparison
+        Your CSV should have:
+        - A **"Review"** column with review text
+        - Optionally: A **"Restaurant"** column for multi-location comparison
         
         **Example:**
         ```
@@ -651,6 +845,17 @@ def main():
         "Italian Bistro","Amazing pasta! Best I've ever had."
         "Sushi Palace","Fresh fish but service was slow."
         ```
+        
+        ### 🎯 Perfect For
+        
+        - 🏪 Restaurant owners monitoring customer satisfaction
+        - 📊 Business analysts tracking sentiment trends
+        - 💼 Marketing teams understanding customer feedback
+        - 🎓 Students learning about NLP and sentiment analysis
+        
+        ### 🚀 Get Started Now!
+        
+        Click the **"Try Demo (750 Reviews)"** button in the sidebar to see it in action! →
         """)
 
 if __name__ == "__main__":

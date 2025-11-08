@@ -1,12 +1,30 @@
-pandas
-numpy
-matplotlib
-seaborn
-wordcloud
-nltk
-scikit-learn
-textblob
-requests
-beautifulsoup4
-streamlit
-plotly
+# Core Data Science Libraries
+pandas>=1.5.0
+numpy>=1.23.0
+
+# NLP Libraries
+nltk>=3.8
+textblob>=0.17.0
+
+# Machine Learning
+scikit-learn>=1.2.0
+
+# Visualization
+matplotlib>=3.6.0
+seaborn>=0.12.0
+wordcloud>=1.9.0
+plotly>=5.14.0
+
+# Web Framework
+streamlit>=1.28.0
+
+# Data Collection (Optional)
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+
+# Excel Export
+xlsxwriter>=3.0.0
+openpyxl>=3.1.0
+
+# Additional Utilities
+python-dateutil>=2.8.0

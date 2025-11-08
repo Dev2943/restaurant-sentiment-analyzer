@@ -1,340 +1,175 @@
-# 🍽️ Restaurant Review Sentiment Analyzer Pro
+# Restaurant Review Sentiment Analyzer Pro
 
-**Advanced NLP Pipeline for Restaurant Business Intelligence**
+An advanced NLP-powered business intelligence platform that analyzes restaurant reviews to provide actionable insights using ensemble machine learning models.
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+## 🌐 Live Demo
 
-A powerful sentiment analysis tool that helps restaurant owners and managers understand customer feedback through advanced Natural Language Processing (NLP) techniques.
+**[View Live Application](https://dev2943-restaurant-sentiment-analyzer.streamlit.app)**
 
-![Dashboard Preview](https://via.placeholder.com/800x400/667eea/ffffff?text=Restaurant+Sentiment+Analyzer+Dashboard)
+## 📊 Overview
 
----
+This project analyzes 750+ restaurant reviews using state-of-the-art Natural Language Processing techniques to deliver comprehensive sentiment analysis and business recommendations. The application features multi-restaurant comparison capabilities, real-time sentiment analysis, and automated insights generation.
 
-## 🌟 Key Features
+## ✨ Key Features
 
-### Advanced NLP Analysis
-- **Multiple ML Models**: TextBlob, VADER, and Ensemble methods for accurate sentiment detection
-- **Confidence Scoring**: 85%+ accuracy with confidence metrics
-- **Real-time Processing**: Analyze hundreds of reviews in seconds
+- **Advanced NLP Pipeline**: Ensemble ML models using TextBlob, VADER, and scikit-learn algorithms
+- **High Accuracy**: Achieves 85%+ classification accuracy
+- **Multi-Restaurant Comparison**: Compare sentiment across multiple restaurant locations
+- **Real-Time Analysis**: Instant sentiment scoring and classification
+- **Topic Modeling**: Automatic extraction of key themes from reviews
+- **Interactive Visualizations**: Word clouds, sentiment distributions, and trend analysis
+- **Automated Business Insights**: Data-driven recommendations for restaurant performance improvement
 
-### Business Intelligence
-- **Multi-Restaurant Comparison**: Compare sentiment across different locations
-- **Topic Modeling**: Automatically identify key themes and issues
-- **Automated Insights**: Get actionable business recommendations
-- **Trend Analysis**: Track sentiment changes over time
+## 🛠️ Built With
 
-### Interactive Dashboard
-- **Modern UI**: Beautiful, intuitive interface with tabs and visualizations
-- **Interactive Charts**: Plotly-powered charts for exploration
-- **Word Clouds**: Visual representation of common themes
-- **Export Options**: Download results as CSV or Excel
+- **Python** - Core programming language
+- **Streamlit** - Web application framework
+- **TextBlob** - Simple sentiment analysis
+- **VADER** - Social media and short text sentiment analysis
+- **Scikit-learn** - Machine learning algorithms (Naive Bayes, Logistic Regression, SVM)
+- **Pandas & NumPy** - Data manipulation and analysis
+- **Matplotlib & Seaborn** - Data visualization
+- **WordCloud** - Visual representation of frequent terms
 
----
+## 📈 Technical Highlights
 
-## 🚀 Quick Start
+- **Ensemble Learning**: Combines multiple NLP models for robust predictions
+- **Feature Engineering**: Advanced text preprocessing and feature extraction
+- **Scalable Architecture**: Handles large datasets efficiently
+- **Interactive Dashboard**: User-friendly interface with real-time updates
+- **Business Intelligence**: Converts raw sentiment into actionable recommendations
 
-### Installation
+## 🚀 How It Works
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/Dev2943/restaurant-sentiment-analyzer.git
-cd restaurant-sentiment-analyzer
-```
+1. **Data Input**: Upload restaurant reviews or use the sample dataset
+2. **Text Preprocessing**: Clean and normalize review text
+3. **Sentiment Analysis**: Apply ensemble ML models (TextBlob, VADER, classifiers)
+4. **Topic Modeling**: Extract key themes and topics
+5. **Visualization**: Generate interactive charts, word clouds, and metrics
+6. **Insights Generation**: Produce automated business recommendations
 
-2. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
+## 📊 Analysis Features
 
-3. **Download NLTK data**
-```python
-python -c "import nltk; nltk.download('vader_lexicon'); nltk.download('punkt'); nltk.download('stopwords')"
-```
+- Sentiment distribution across positive, negative, and neutral reviews
+- Rating correlation analysis
+- Topic extraction and frequency analysis
+- Word clouds for positive and negative feedback
+- Time-series sentiment trends (if date data available)
+- Restaurant comparison dashboards
+- Key driver analysis for customer satisfaction
 
-4. **Run the dashboard**
-```bash
-streamlit run dashboard_v2.py
-```
+## 🎯 Use Cases
 
-The dashboard will open in your browser at `http://localhost:8501`
+- **Restaurant Owners**: Understand customer feedback and improve service
+- **Marketing Teams**: Identify strengths and weaknesses for campaigns
+- **Operations Managers**: Prioritize areas for operational improvements
+- **Business Analysts**: Extract insights from customer reviews at scale
 
----
-
-## 📊 Usage
-
-### Basic Analysis
-
-1. **Upload your CSV file** with restaurant reviews
-   - Required column: Review text
-   - Optional: Restaurant name (for comparison)
-
-2. **Select columns** from your dataset
-
-3. **Click "Analyze Reviews"**
-
-4. **Explore insights** in different tabs:
-   - Overview: Key metrics and distributions
-   - Detailed Analysis: Individual review breakdown
-   - Restaurant Comparison: Performance across locations
-   - Topics & Insights: Themes and recommendations
-   - Export: Download results
-
-### CSV Format Example
-
-```csv
-Restaurant,Review,Date
-"Italian Bistro","Amazing pasta! Best I've ever had. Great service too!",2024-01-15
-"Sushi Palace","Fresh fish but service was very slow. Disappointed.",2024-01-16
-"Burger Joint","Decent food, nothing special. Average experience.",2024-01-17
-```
-
----
-
-## 🎯 Features in Detail
-
-### 1. Sentiment Classification
-
-Three sentiment categories:
-- **Positive**: Happy customers, great experiences
-- **Negative**: Issues, complaints, problems
-- **Neutral**: Mixed or moderate feedback
-
-### 2. Confidence Scoring
-
-Each prediction includes a confidence score (0-1):
-- **High confidence (>0.7)**: Strong sentiment indicators
-- **Medium confidence (0.4-0.7)**: Moderate signals
-- **Low confidence (<0.4)**: Ambiguous reviews
-
-### 3. Multi-Model Ensemble
-
-Combines multiple NLP approaches:
-- **TextBlob**: Pattern-based sentiment analysis
-- **VADER**: Social media-optimized analyzer
-- **Ensemble**: Weighted average for best accuracy
-
-### 4. Topic Modeling
-
-Automatically extracts main themes:
-- Uses Latent Dirichlet Allocation (LDA)
-- Identifies 5 key topics
-- Shows top keywords per topic
-
-### 5. Restaurant Comparison
-
-Compare metrics across locations:
-- Positive sentiment percentage
-- Average confidence scores
-- Total review counts
-- Side-by-side visualizations
-
----
-
-## 📈 Example Outputs
-
-### Sentiment Distribution
-```
-Positive: 68% (340 reviews)
-Negative: 22% (110 reviews)
-Neutral: 10% (50 reviews)
-```
-
-### Sample Insights
-- ✅ Strong positive sentiment - Customers are very satisfied!
-- 🎯 High confidence scores - Predictions are reliable
-- 💡 Most discussed topics: Food quality, Service, Ambiance
-
-### Top Positive Review
-*"Absolutely incredible dining experience! The pasta was perfectly cooked, and the service was outstanding..."*
-
-### Top Concern
-*"While the food was decent, the service was incredibly slow and we had to wait 45 minutes for our order..."*
-
----
-
-## 🛠️ Technical Details
-
-### Technology Stack
-
-**Backend & Analysis:**
-- Python 3.8+
-- pandas, numpy - Data manipulation
-- scikit-learn - Machine learning
-- NLTK, TextBlob - NLP processing
-
-**Visualization:**
-- Streamlit - Web dashboard
-- Plotly - Interactive charts
-- Matplotlib, Seaborn - Static plots
-- WordCloud - Text visualization
-
-### Architecture
+## 📂 Project Structure
 
 ```
 restaurant-sentiment-analyzer/
-├── dashboard_v2.py          # Main Streamlit app
-├── restaurant_analyzer.py   # Analysis engine
-├── data_collector.py        # Data gathering (optional)
-├── requirements.txt         # Dependencies
-├── README.md               # Documentation
-└── data/                   # Sample datasets
-    └── restaurant_reviews.csv
+├── app.py                  # Main Streamlit application
+├── data/                   # Sample review datasets
+├── models/                 # Pre-trained ML models
+├── utils/                  # Helper functions for NLP
+├── visualizations/         # Plotting and charting utilities
+├── requirements.txt        # Python dependencies
+└── README.md              # Project documentation
 ```
 
-### Performance
+## 🔧 Local Installation
 
-- **Speed**: ~200 reviews per second
-- **Accuracy**: 85%+ on benchmark datasets
-- **Scalability**: Tested with 10,000+ reviews
-
----
-
-## 📦 Deployment
-
-### Deploy to Streamlit Cloud (Free)
-
-1. **Push to GitHub**
 ```bash
-git add .
-git commit -m "Initial commit"
-git push origin main
+# Clone the repository
+git clone https://github.com/Dev2943/restaurant-sentiment-analyzer.git
+
+# Navigate to project directory
+cd restaurant-sentiment-analyzer
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+streamlit run app.py
 ```
 
-2. **Go to**: https://share.streamlit.io
+## 📦 Requirements
 
-3. **Deploy**:
-   - Select your repository
-   - Main file: `dashboard_v2.py`
-   - Click "Deploy"
-
-Your app will be live at: `https://your-app.streamlit.app`
-
-### Deploy to Heroku
-
-1. **Create `Procfile`**
 ```
-web: streamlit run dashboard_v2.py --server.port=$PORT
-```
-
-2. **Deploy**
-```bash
-heroku create your-app-name
-git push heroku main
+streamlit
+pandas
+numpy
+scikit-learn
+textblob
+vaderSentiment
+matplotlib
+seaborn
+wordcloud
+plotly
 ```
 
----
+## 🎓 Technical Details
 
-## 📊 Sample Datasets
+### Machine Learning Models
+- **Naive Bayes Classifier**: Fast and efficient for text classification
+- **Logistic Regression**: Provides probabilistic sentiment scores
+- **Support Vector Machine**: High-dimensional text classification
+- **Ensemble Voting**: Combines predictions for improved accuracy
 
-### Included Data
+### NLP Techniques
+- Tokenization and lemmatization
+- Stop word removal
+- TF-IDF vectorization
+- N-gram analysis
+- Part-of-speech tagging
 
-The project includes sample datasets:
-- `data/restaurant_reviews.csv` - 500 sample reviews
-- `data/demo_results.csv` - Pre-analyzed results
+### Evaluation Metrics
+- Accuracy: 85%+
+- Precision, Recall, F1-Score
+- Confusion Matrix Analysis
+- Cross-validation scores
 
-### Get More Data
+## 🌟 Future Enhancements
 
-**Sources:**
-- Yelp API (requires API key)
-- Google Reviews (web scraping)
-- Kaggle datasets
-- Your own customer feedback
-
----
-
-## 🎓 Use Cases
-
-### For Restaurant Owners
-- Monitor customer satisfaction
-- Identify problem areas quickly
-- Track improvements over time
-- Compare locations
-
-### For Managers
-- Daily sentiment tracking
-- Staff performance insights
-- Menu item feedback
-- Service quality metrics
-
-### For Analysts
-- Customer behavior patterns
-- Sentiment trend analysis
-- Competitive benchmarking
-- Report generation
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📝 Roadmap
-
-### Upcoming Features
-
-- [ ] Real-time Yelp API integration
-- [ ] Sentiment trends over time
-- [ ] Competitive analysis dashboard
-- [ ] Email alerts for negative reviews
-- [ ] Mobile app version
 - [ ] Multi-language support
-
----
-
-## 🐛 Known Issues
-
-- Large CSV files (>10,000 reviews) may take longer to process
-- Word clouds require matplotlib backend configuration on some systems
-- Topic modeling works best with 100+ reviews
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
+- [ ] Aspect-based sentiment analysis
+- [ ] Deep learning models (BERT, RoBERTa)
+- [ ] Real-time review scraping from APIs
+- [ ] Competitive analysis features
+- [ ] Email alert system for negative reviews
+- [ ] Mobile app version
 
 ## 👨‍💻 Author
 
 **Dev Golakiya**
-- Portfolio: [dev-golakiya-portfolio.netlify.app](https://dev-golakiya-portfolio.netlify.app)
-- GitHub: [@Dev2943](https://github.com/Dev2943)
-- LinkedIn: [Dev Golakiya](https://linkedin.com/in/devgolakiya)
 - Email: devgolakiya31@gmail.com
+- LinkedIn: [Dev Golakiya](https://www.linkedin.com/in/devgolakiya)
+- GitHub: [@Dev2943](https://github.com/Dev2943)
+- Portfolio: [View Portfolio](https://your-portfolio-link.netlify.app)
 
----
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- Streamlit for the amazing dashboard framework
-- NLTK and TextBlob for NLP tools
-- The open-source community
+- Built with Streamlit for rapid prototyping
+- NLP libraries: TextBlob, VADER, and scikit-learn
+- Dataset sources and restaurant review platforms
+- Open source community for tools and inspiration
 
 ---
 
-## 📞 Support
+⭐ **If you find this project useful, please consider giving it a star on GitHub!**
 
-- **Issues**: [GitHub Issues](https://github.com/Dev2943/restaurant-sentiment-analyzer/issues)
-- **Questions**: Open a discussion or email me
-- **Feature Requests**: Create an issue with the "enhancement" label
+## 📞 Contact
 
----
-
-## ⭐ Star This Repository
-
-If you find this project useful, please give it a star! It helps others discover the project.
+For questions, suggestions, or collaboration opportunities:
+- Open an issue on GitHub
+- Email: devgolakiya31@gmail.com
+- Connect on LinkedIn
 
 ---
 
-**Built with ❤️ using Python, Streamlit, and Advanced NLP**
+*Last Updated: April 2025*
